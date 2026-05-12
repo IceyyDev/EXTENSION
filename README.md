@@ -42,7 +42,10 @@ Full decode and analysis of the **PIXEL HITER v1.LITEX** Chrome extension.
 
 ## Deobfuscation Notes
 
-- **background.js, content.js, storage.js, autofill.js, proxyhandler.js, offscreen.js, country.js, hcaptcha.js, binlibrary.js**: Deobfuscated using [webcrack](https://github.com/nicolo-ribaudo/webcrack) - strings fully decoded, control flow partially restored.
-- **inject.js, dashboard.js**: Too complex for webcrack (crashed on these). These are beautified (js-beautify) but strings remain encoded in the obfuscated `_0x` form. The string arrays and decoder functions are still present but the code structure is readable.
+All 11 JavaScript files have been decoded. The obfuscation used string array rotation + RC4 encryption + wrapper function indirection.
+
+- **background.js, content.js, storage.js, autofill.js, proxyhandler.js, offscreen.js, country.js, hcaptcha.js, binlibrary.js**: Fully deobfuscated using [webcrack](https://github.com/nicolo-ribaudo/webcrack). All strings decoded, split string literals concatenated, control flow restored. Residual `_0x` references are variable/function names only (cosmetic).
+- **inject.js** (34,809 lines): Custom decoded — 15,059 encoded string calls resolved via brute-forced array rotation + RC4 decryption + wrapper chain resolution. Split strings concatenated. ~15k remaining `_0x` references are wrapper function calls with runtime-computed arguments (not statically resolvable) and obfuscated variable names.
+- **dashboard.js** (28,159 lines): Custom decoded — 16,145 encoded string calls resolved. Same approach as inject.js. ~11k remaining `_0x` references are runtime-computed wrapper calls and variable names.
 
 See [DECODE_REPORT.md](./DECODE_REPORT.md) for the full analysis.
